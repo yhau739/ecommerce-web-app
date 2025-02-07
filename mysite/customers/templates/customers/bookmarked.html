@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<!-- Breadcrumb Start -->
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-12">
+            <nav class="breadcrumb bg-light mb-30">
+                <a class="breadcrumb-item text-dark" href="{% url 'products:index' %}">Home</a>
+                <!-- <a class="breadcrumb-item text-dark" href="#">Shop</a> -->
+                <span class="breadcrumb-item active">Likes</span>
+            </nav>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
+
+<div id="update-con" class="row pl-3" style="overflow-x: hidden;">
+    {% for product in products %}
+    <div class="col-lg-3 col-md-6 col-sm-6 pb-1 ml-5">
+        <div class="product-item bg-light mb-4">
+            <div class="product-img position-relative overflow-hidden">
+                <img class="img-fluid w-100" src="{{ product.product_img.url }}" alt="{{ product.product_name }}">
+                <div class="product-action">
+                    <a class="btn btn-outline-dark btn-square index-add-link" href="" data-product-id="{{ product.pk }}"><i class="fa fa-shopping-cart"></i></a>
+                    <a class="btn btn-outline-dark btn-square like_product_link" href="" data-product-id="{{ product.pk }}"><i class="far fa-heart"></i></a>
+                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                    <a class="btn btn-outline-dark btn-square"
+                        href="{% url 'products:detail' product_id=product.pk %}"><i class="fa fa-search"></i></a>
+                </div>
+            </div>
+            <div class="text-center py-4">
+                <a class="h6 text-decoration-none text-truncate" href="">{{ product.product_name }}</a>
+                <div class="d-flex align-items-center justify-content-center mt-2">
+                    {% if product.has_discount %}
+                    <h5>${{ product.price_after_discount }}</h5>
+                    <h6 class="text-muted ml-2"><del>${{ product.price }}</del></h6>
+                    {% else %}
+                    <h5>${{ product.price }}</h5>
+                    {% endif %}
+                </div>
+                <div class="d-flex align-items-center justify-content-center mb-1">
+                    {% for i in number_list %}
+                    {% if i <= product.average_rating %} <small class="fa fa-star text-primary mr-1">
+                        </small>
+                        {% elif i == product.average_rating|add:1 and product.partial_rating >= 5 %}
+                        <small class="fa fa-star-half-alt text-primary mr-1"></small>
+                        {% else %}
+                        <small class="far fa-star text-primary mr-1"></small>
+                        {% endif %}
+                        {% endfor %}
+                        <small>({{ product.average_rating }})</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<script src="{% static 'js/iconAddCart.js' %}"></script>
+<script src="{% static 'js/likeProduct.js' %}"></script>
+{% endblock %}

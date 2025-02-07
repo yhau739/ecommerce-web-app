@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if latest_customer_list %}
+    <ul>
+    {% for customer in latest_customer_list %}
+        <li>{{ customer.user.first_name }} {{ customer.user.last_name }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>{{ message }}</p>
+{% endif %}
+
+{% endblock %}

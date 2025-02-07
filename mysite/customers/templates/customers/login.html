@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+<!-- login.html -->
+<div class="login_con">
+    <div class="login_container">
+        <div class="content">
+            <div class="shop_name">
+                <a href="" class="text-decoration-none">
+                    <span class="h1 text-uppercase text-primary bg-dark px-2">Snap</span>
+                    <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Cart</span>
+                </a>
+            </div>
+            <form class="content__form" method="post" action="{% url 'customers:login_request' %}">
+                {% csrf_token %}
+                <div class="content__inputs">
+                    <label>
+                        <!-- Put Name so that authenticationForm knows which input is what value -->
+                        <input required="" type="text" name="username">
+                        <span>Username</span>
+                    </label>
+                    <label>
+                        <input required="" type="password" name="password">
+                        <span>Password</span>
+                    </label>
+                </div>
+                <button type="submit">Log In</button>
+            </form>
+            <div class="content__or-text">
+                <span></span>
+                <span>OR</span>
+                <span></span>
+            </div>
+            <div class="content__forgot-buttons">
+                <button>Forgot password?</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% if validation %}
+<script src="{% static 'js/validation.js' %}"></script>
+<script>
+    showErrorToast("Incorrect Password or Username");
+</script>
+{% endif %}
+{% endblock %}

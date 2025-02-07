@@ -1,0 +1,11 @@
+{% if products.has_previous %}
+<li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">Previous</span></a></li>
+<li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}">{{
+        products.previous_page_number }}</a></li>
+{% endif %}
+<li class="page-item active"><a class="page-link" href="#">{{ products.number }}</a></li>
+{% if products.has_next %}
+<li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">{{ products.number|add:1 }}</a>
+</li>
+<li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}">Next</a></li>
+{% endif %}

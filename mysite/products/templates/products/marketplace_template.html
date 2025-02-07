@@ -1,0 +1,42 @@
+{% for product in products %}
+<div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+    <div class="product-item bg-light mb-4">
+        <div class="product-img position-relative overflow-hidden">
+            <img class="img-fluid w-100" src="{{ product.product_img.url }}"
+                alt="{{ product.product_name }}">
+            <div class="product-action">
+                <a class="btn btn-outline-dark btn-square" href=""><i
+                        class="fa fa-shopping-cart"></i></a>
+                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                <a class="btn btn-outline-dark btn-square"
+                    href="{% url 'products:detail' product_id=product.pk %}"><i
+                        class="fa fa-search"></i></a>
+            </div>
+        </div>
+        <div class="text-center py-4">
+            <a class="h6 text-decoration-none text-truncate" href="">{{ product.product_name }}</a>
+            <div class="d-flex align-items-center justify-content-center mt-2">
+                {% if product.has_discount %}
+                <h5>${{ product.price_after_discount }}</h5>
+                <h6 class="text-muted ml-2"><del>${{ product.price }}</del></h6>
+                {% else %}
+                <h5>${{ product.price }}</h5>
+                {% endif %}
+            </div>
+            <div class="d-flex align-items-center justify-content-center mb-1">
+                {% for i in number_list %}
+                {% if i <= product.average_rating %} <small class="fa fa-star text-primary mr-1">
+                    </small>
+                    {% elif i == product.average_rating|add:1 and product.partial_rating >= 5 %}
+                    <small class="fa fa-star-half-alt text-primary mr-1"></small>
+                    {% else %}
+                    <small class="far fa-star text-primary mr-1"></small>
+                    {% endif %}
+                    {% endfor %}
+                    <small>({{ product.average_rating }})</small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}

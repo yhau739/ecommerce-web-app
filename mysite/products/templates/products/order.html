@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+<div class="container-fluid">
+    <div class="row px-xl-5">
+        <div class="col-lg-8 table-responsive mb-5">
+            {% for order in paid_orders %}
+            <table class="table table-light table-borderless table-hover text-center mb-3">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Image</th>
+                        <th>Products</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <!-- <th>Date</th> -->
+                    </tr>
+                </thead>
+                <tbody id="cart_item_con" class="align-middle">
+                    {% for order_item in order.orderitem_set.all %}
+                    <tr>
+                        <td class="align-middle">
+                            <img src="{{ order_item.product.product_img.url }}"
+                                alt="{{ order_item.product.product_name }}" style="width: 50px;">
+                        </td>
+                        <td class="align-middle">
+                            {{ order_item.product.product_name }}
+                        </td>
+                        <td class="align-middle">${{ order_item.product.price }}</td>
+                        <td class="align-middle">
+                            {{ order_item.quantity }}
+                            <!-- <div class="parent_con input-group quantity mx-auto" style="width: 100px;">
+                                <div class="input-group-btn">
+                                    <button id="minusQuantityBtn" class="btn btn-sm btn-primary btn-minus">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <input readonly id="quantityInput" type="text"
+                                    class="form-control form-control-sm bg-secondary border-0 text-center"
+                                    value="{{ order_item.quantity }}" data-product-id="{{ order_item.product.pk }}">
+                                <div class="input-group-btn">
+                                    <button id="addQuantityBtn" class="btn btn-sm btn-primary btn-plus">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div> -->
+                        </td>
+                        <td class="align-middle" id="order_item_total_{{order_item.product.pk}}">$
+                            {{ order_item.item_total }}</td>
+                        <!-- <td class="align-middle">
+                            <button class="btn btn-sm btn-danger remove_btn"
+                                data-product-id="{{ order_item.product.pk }}">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </td> -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tr class="border-top">
+                    <td>Date :</td>
+                    <td><b> {{ order.order_date }} </b></td>
+                    <td></td>
+                    <div class="d-flex justify-content-between mt-2">
+                        <td>Order Total :</h5>
+                        <td id="order_total_after"><b>$ {{ order.total_amount|add:'10'|floatformat:2 }}</b></h5>
+                    </div>
+                </tr>
+
+            </table>
+            {% endfor %}
+        </div>
+        <div class="col-lg-4">
+            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Spending
+                    Summary</span></h5>
+            <div class="bg-light p-30 mb-5">
+                <div class="border-bottom pb-2">
+                    <div class="d-flex justify-content-between mb-3">
+                        <h6>Total Spent</h6>
+                        <h6 id="order_total_before">$ 22122</h6>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                        <h6>Discount Savings &#128293;</h6>
+                        <h6 id="order_total_before">$ 2123</h6>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="font-weight-medium">Savings(Others) &#128293;</h6>
+                        <h6 class="font-weight-medium">$80</h6>
+                    </div>
+                </div>
+                <div class="pt-2">
+                    <div class="d-flex justify-content-between mt-2">
+                        <h5>Mind-Blowing Savings &#127881;
+                        </h5>
+                        <h5 id="order_total_after">$ 2203</h5>
+                    </div>
+                    <a href="">Share your results!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
